@@ -5,7 +5,7 @@ const upload = multer();
 const app = express();
 const port = 3000;
 
-app.use("/file", express.static(__dirname + "/file"));
+app.use("/file", express.static(__dirname + "/tmp"));
 
 app.get("/upload-file", (req, res) => {
   res.sendFile(__dirname + "/dist/index.html");
@@ -14,7 +14,7 @@ app.get("/upload-file", (req, res) => {
 app.post("/upload-file", upload.single("phile"), async (req, res) => {
   try {
     const file = req.file;
-    fs.writeFileSync(__dirname + "/file/" + file.originalname, file.buffer);
+    fs.writeFileSync(__dirname + "/tmp/" + file.originalname, file.buffer);
     res.redirect("/upload-file");
   } catch (error) {
     res.json(error);
